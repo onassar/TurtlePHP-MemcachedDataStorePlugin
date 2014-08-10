@@ -14,7 +14,7 @@
     // Key, which when passed in _GET, which flush the data store
     $flushKey = 'flush';
 
-    // Whether or not to allow the data store to be flushde
+    // Whether or not to allow the data store to be flushed
     $flushing = true;
 
     // Key, which when passed in _GET, bypasses the cache
