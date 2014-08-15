@@ -59,8 +59,9 @@
             if (is_null(self::$_initiated) === false) {
                 self::$_initiated = true;
                 require_once self::$_configPath;
-                $config = \Plugin\Config::retrieve();
-                $config = $config['TurtlePHP-MemcachedDataStorePlugin'];
+                $config = \Plugin\Config::retrieve(
+                    'TurtlePHP-MemcachedDataStorePlugin'
+                );
                 \MemcachedCache::init($config['namespace'], $config['servers']);
                 if ($config['flushing'] === true) {
                     \MemcachedCache::checkForFlushing($config['flushKey']);
