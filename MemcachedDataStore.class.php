@@ -62,7 +62,11 @@
                 $config = \Plugin\Config::retrieve(
                     'TurtlePHP-MemcachedDataStorePlugin'
                 );
-                \MemcachedCache::init($config['namespace'], $config['servers']);
+                \MemcachedCache::init(
+                    $config['namespace'],
+                    $config['servers'],
+                    $config['benchmark']
+                );
                 if ($config['flushing'] === true) {
                     \MemcachedCache::checkForFlushing($config['flushKey']);
                 }

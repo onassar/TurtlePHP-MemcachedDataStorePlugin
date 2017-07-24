@@ -11,6 +11,9 @@
      * 
      */
 
+    // Whether duration should be benchmarked
+    $benchmark = false;
+
     // Key, which when passed in _GET, which flush the data store
     $flushKey = 'flush';
 
@@ -37,6 +40,7 @@
     \Plugin\Config::add(
         'TurtlePHP-MemcachedDataStorePlugin',
         array(
+            'benchmark' => $benchmark,
             'flushKey' => $flushKey,
             'flushing' => $flushing,
             'bypassKey' => $bypassKey,
