@@ -32,8 +32,8 @@
         /**
          * _configPath
          *
-         * @var    string
-         * @access protected
+         * @var     string
+         * @access  protected
          * @static
          */
         protected static $_configPath = 'config.default.inc.php';
@@ -41,8 +41,8 @@
         /**
          * _initiated
          *
-         * @var    boolean
-         * @access protected
+         * @var     boolean
+         * @access  protected
          * @static
          */
         protected static $_initiated = false;
@@ -50,9 +50,9 @@
         /**
          * init
          * 
-         * @access public
+         * @access  public
          * @static
-         * @return void
+         * @return  void
          */
         public static function init()
         {
@@ -77,9 +77,9 @@
         /**
          * setConfigPath
          * 
-         * @access public
-         * @param  string $path
-         * @return void
+         * @access  public
+         * @param   string $path
+         * @return  void
          */
         public static function setConfigPath($path)
         {
@@ -91,6 +91,6 @@
     $info = pathinfo(__DIR__);
     $parent = ($info['dirname']) . '/' . ($info['basename']);
     $configPath = ($parent) . '/config.inc.php';
-    if (is_file($configPath)) {
+    if (is_file($configPath) === true) {
         MemcachedDataStore::setConfigPath($configPath);
     }
