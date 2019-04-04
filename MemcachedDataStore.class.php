@@ -41,7 +41,7 @@
         /**
          * _initiated
          *
-         * @var     boolean
+         * @var     bool
          * @access  protected
          * @static
          */
