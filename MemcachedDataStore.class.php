@@ -3,31 +3,16 @@
     // namespace
     namespace Plugin;
 
-    // dependency check
-    if (class_exists('\\Plugin\\Config') === false) {
-        throw new \Exception(
-            '*Config* class required. Please see ' .
-            'https://github.com/onassar/TurtlePHP-ConfigPlugin'
-        );
-    }
-
-    // dependency check
-    if (class_exists('\\MemcachedCache') === false) {
-        throw new \Exception(
-            '*MemcachedCache* class required. Please see ' .
-            'https://github.com/onassar/PHP-MemcachedCache'
-        );
-    }
-
     /**
      * MemcachedDataStore
      * 
-     * Memcached data store plugin for TurtlePHP
+     * Memcached Data Store plugin for TurtlePHP.
      * 
      * @author  Oliver Nassar <onassar@gmail.com>
      * @abstract
+     * @extends Base
      */
-    abstract class MemcachedDataStore
+    abstract class MemcachedDataStore extends Base
     {
         /**
          * _configPath
@@ -48,49 +33,58 @@
         protected static $_initiated = false;
 
         /**
+         * _checkDependencies
+         * 
+         * @access  protected
+         * @static
+         * @return  void
+         */
+        protected static function _checkDependencies(): void
+        {
+            static::_checkConfigPluginDependency();
+            static::_checkMemcachedCacheDependency();
+        }
+
+        /**
+         * _setupMemcachedConnection
+         * 
+         * @access  protected
+         * @static
+         * @return  void
+         */
+        protected static function _setupMemcachedConnection(): void
+        {
+            $configData = static::_getConfigData();
+            $namespace = $configData['namespace'];
+            $servers = $configData['servers'];
+            $benchmark = $configData['benchmark'];
+            \MemcachedCache::init($namespace, $servers, $benchmark);
+            if ($configData['flushing'] === true) {
+                \MemcachedCache::checkForFlushing($configData['flushKey']);
+            }
+            \MemcachedCache::setupBypassing($configData['bypassKey']);
+        }
+
+        /**
          * init
          * 
          * @access  public
          * @static
-         * @return  void
+         * @return  bool
          */
-        public static function init()
+        public static function init(): bool
         {
-            if (self::$_initiated === false) {
-                self::$_initiated = true;
-                require_once self::$_configPath;
-                $config = \Plugin\Config::retrieve(
-                    'TurtlePHP-MemcachedDataStorePlugin'
-                );
-                \MemcachedCache::init(
-                    $config['namespace'],
-                    $config['servers'],
-                    $config['benchmark']
-                );
-                if ($config['flushing'] === true) {
-                    \MemcachedCache::checkForFlushing($config['flushKey']);
-                }
-                \MemcachedCache::setupBypassing($config['bypassKey']);
+            if (static::$_initiated === true) {
+                return false;
             }
-        }
-
-        /**
-         * setConfigPath
-         * 
-         * @access  public
-         * @param   string $path
-         * @return  void
-         */
-        public static function setConfigPath($path)
-        {
-            self::$_configPath = $path;
+            parent::init();
+            static::_setupMemcachedConnection();
+            return true;
         }
     }
 
-    // Config
+    // Config path loading
     $info = pathinfo(__DIR__);
     $parent = ($info['dirname']) . '/' . ($info['basename']);
     $configPath = ($parent) . '/config.inc.php';
-    if (is_file($configPath) === true) {
-        MemcachedDataStore::setConfigPath($configPath);
-    }
+    MemcachedDataStore::setConfigPath($configPath);
