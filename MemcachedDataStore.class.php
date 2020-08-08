@@ -16,7 +16,7 @@
     {
         /**
          * _configPath
-         *
+         * 
          * @access  protected
          * @var     string
          * @static
@@ -25,7 +25,7 @@
 
         /**
          * _initiated
-         *
+         * 
          * @access  protected
          * @var     bool
          * @static
