@@ -18,7 +18,7 @@
          * _configPath
          * 
          * @access  protected
-         * @var     string
+         * @var     string (default: 'config.default.inc.php')
          * @static
          */
         protected static $_configPath = 'config.default.inc.php';
@@ -27,7 +27,7 @@
          * _initiated
          * 
          * @access  protected
-         * @var     bool
+         * @var     bool (defualt: false)
          * @static
          */
         protected static $_initiated = false;
