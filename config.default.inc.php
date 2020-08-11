@@ -1,12 +1,6 @@
 <?php
 
     /**
-     * Namespace
-     * 
-     */
-    namespace Plugin\MemcachedDataStore;
-
-    /**
      * Plugin Config Data
      * 
      */
@@ -94,4 +88,4 @@
      * 
      */
     $key = 'TurtlePHP-MemcachedDataStorePlugin';
-    \Plugin\Config::add($key, $pluginConfigData);
+    TurtlePHP\Plugin\Config::set($key, $pluginConfigData);
